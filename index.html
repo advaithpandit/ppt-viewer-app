@@ -15,16 +15,19 @@
         
         <!-- ===== HEADER & ACTIONS MENU ===== -->
         <header class="app-header">
-            <h1>PPT Viewer</h1>
-            <div class="menu-container">
-                <button id="menu-button" class="menu-button">Menu ▼</button>
-                <div id="dropdown-menu" class="dropdown-menu">
-                    <div class="dropdown-header">Presentations</div>
-                    <ul id="ppt-list" class="ppt-list">
-                        <!-- List will be populated by JS -->
-                    </ul>
-                    <div class="dropdown-divider"></div>
-                    <a href="#" id="upload-link" class="dropdown-item">Upload New Presentation</a>
+            <!-- This title will be updated by JavaScript -->
+            <h1 id="presentation-title">PPT Viewer</h1>
+            <div class="header-actions">
+                <!-- The new Upload button is here -->
+                <button id="upload-button" class="header-btn">Upload</button>
+                <div class="menu-container">
+                    <button id="menu-button" class="header-btn">Menu ▼</button>
+                    <div id="dropdown-menu" class="dropdown-menu">
+                        <div class="dropdown-header">Presentations</div>
+                        <ul id="ppt-list" class="ppt-list">
+                            <!-- List will be populated by JS -->
+                        </ul>
+                    </div>
                 </div>
             </div>
         </header>

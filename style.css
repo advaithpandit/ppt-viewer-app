@@ -9,6 +9,7 @@
     --accent-color: #007bff;
     --accent-hover: #0056b3;
     --dropdown-bg: #3a3a3a;
+    --danger-color: #dc3545;
 }
 
 body {
@@ -37,16 +38,21 @@ body {
     flex-shrink: 0;
 }
 
-.app-header h1 {
+#presentation-title {
     font-size: 1.25rem;
     margin: 0;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
-.menu-container {
-    position: relative;
+.header-actions {
+    display: flex;
+    align-items: center;
+    gap: 12px;
 }
 
-.menu-button {
+.header-btn {
     padding: 8px 16px;
     font-size: 0.9rem;
     background-color: var(--main-bg);
@@ -54,17 +60,25 @@ body {
     color: var(--text-color);
     border-radius: 6px;
     cursor: pointer;
+    white-space: nowrap;
+}
+.header-btn:hover {
+    border-color: #666;
+}
+
+.menu-container {
+    position: relative;
 }
 
 .dropdown-menu {
     display: none;
     position: absolute;
     right: 0;
-    top: 120%;
+    top: 130%;
     background-color: var(--dropdown-bg);
     border: 1px solid var(--border-color);
     border-radius: 6px;
-    width: 300px;
+    width: 320px;
     z-index: 1000;
     box-shadow: 0 8px 16px rgba(0,0,0,0.3);
     overflow: hidden;
@@ -84,34 +98,36 @@ body {
     list-style: none;
     padding: 0;
     margin: 0;
-    max-height: 250px;
+    max-height: 400px;
     overflow-y: auto;
 }
 
-.ppt-list .ppt-info {
+.ppt-list-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
     padding: 12px 16px;
     cursor: pointer;
 }
-.ppt-list .ppt-info:hover {
+.ppt-list-item:hover {
     background-color: var(--main-bg);
 }
-.ppt-list .ppt-name { font-weight: 500; margin-bottom: 4px; }
-.ppt-list .ppt-uploader { font-size: 0.8rem; color: var(--text-muted); }
+.ppt-info .ppt-name { font-weight: 500; margin-bottom: 4px; }
+.ppt-info .ppt-uploader { font-size: 0.8rem; color: var(--text-muted); }
 
-.dropdown-divider {
-    height: 1px;
-    background-color: var(--border-color);
-    margin: 8px 0;
+.item-actions {
+    display: flex;
+    gap: 12px;
+    font-size: 1.1rem;
 }
-
-.dropdown-item {
-    display: block;
-    padding: 12px 16px;
+.action-btn {
+    background: none; border: none; color: var(--text-muted); cursor: pointer; padding: 4px;
+}
+.action-btn:hover {
     color: var(--text-color);
-    text-decoration: none;
 }
-.dropdown-item:hover {
-    background-color: var(--main-bg);
+.delete-btn:hover {
+    color: var(--danger-color);
 }
 
 /* --- Carousel & Viewer Styles --- */
@@ -125,114 +141,55 @@ body {
 }
 
 .carousel-btn {
-    background-color: var(--main-bg);
-    border: 1px solid var(--border-color);
-    color: var(--text-color);
-    font-size: 2.5rem;
-    font-weight: bold;
-    cursor: pointer;
-    border-radius: 50%;
-    width: 50px;
-    height: 50px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    line-height: 1;
-    transition: background-color 0.2s;
-    flex-shrink: 0;
+    background-color: var(--main-bg); border: 1px solid var(--border-color); color: var(--text-color);
+    font-size: 2.5rem; font-weight: bold; cursor: pointer; border-radius: 50%;
+    width: 50px; height: 50px; display: flex; align-items: center; justify-content: center;
+    line-height: 1; transition: background-color 0.2s; flex-shrink: 0;
 }
-.carousel-btn:hover {
-    background-color: var(--dropdown-bg);
-}
-.carousel-btn:disabled {
-    opacity: 0.3;
-    cursor: not-allowed;
-}
+.carousel-btn:hover { background-color: var(--dropdown-bg); }
+.carousel-btn:disabled { opacity: 0.3; cursor: not-allowed; }
 
 .viewer-container {
-    width: 100%;
-    height: 100%;
-    background-color: #000;
-    border: 1px solid var(--border-color);
-    border-radius: 8px;
-    overflow: hidden;
+    width: 100%; height: 100%; background-color: #000;
+    border: 1px solid var(--border-color); border-radius: 8px; overflow: hidden;
 }
 
 .welcome-message {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    height: 100%;
-    text-align: center;
-    color: var(--text-muted);
+    display: flex; flex-direction: column; justify-content: center; align-items: center;
+    height: 100%; text-align: center; color: var(--text-muted);
 }
-.welcome-message h2 {
-    color: var(--text-color);
-}
+.welcome-message h2 { color: var(--text-color); }
 
-#viewer-iframe {
-    width: 100%;
-    height: 100%;
-    border: none;
-}
+#viewer-iframe { width: 100%; height: 100%; border: none; }
 
 .carousel-counter {
-    text-align: center;
-    padding: 8px;
-    height: 30px;
-    flex-shrink: 0;
-    color: var(--text-muted);
+    text-align: center; padding: 8px; height: 30px; flex-shrink: 0; color: var(--text-muted);
 }
 
 /* --- Modal Styles --- */
 .modal-overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.7);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    z-index: 2000;
+    position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+    background-color: rgba(0, 0, 0, 0.7); display: flex; justify-content: center;
+    align-items: center; z-index: 2000;
 }
-
-.modal-overlay.hidden {
-    display: none;
-}
+.modal-overlay.hidden { display: none; }
 
 .modal-content {
-    background-color: var(--header-bg);
-    padding: 24px;
-    border-radius: 8px;
-    width: 90%;
-    max-width: 500px;
-    position: relative;
+    background-color: var(--header-bg); padding: 24px; border-radius: 8px;
+    width: 90%; max-width: 500px; position: relative;
     box-shadow: 0 10px 30px rgba(0,0,0,0.5);
 }
 
 .close-button {
-    position: absolute;
-    top: 10px;
-    right: 15px;
-    font-size: 2rem;
-    color: var(--text-muted);
-    background: none;
-    border: none;
-    cursor: pointer;
+    position: absolute; top: 10px; right: 15px; font-size: 2rem;
+    color: var(--text-muted); background: none; border: none; cursor: pointer;
 }
-.close-button:hover {
-    color: var(--text-color);
-}
+.close-button:hover { color: var(--text-color); }
 
 .upload-form .form-group {
     display: flex; flex-direction: column; margin-bottom: 16px;
 }
-.upload-form label {
-    margin-bottom: 8px; font-size: 0.9rem;
-}
+.upload-form label { margin-bottom: 8px; font-size: 0.9rem; }
 .upload-form input {
     padding: 10px; background-color: var(--main-bg); border: 1px solid var(--border-color);
     border-radius: 4px; color: var(--text-color); font-size: 1rem;
