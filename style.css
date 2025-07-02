@@ -1,14 +1,14 @@
 /* --- Global Styles & Variables --- */
 :root {
     --bg-color: #1a1a1a;
-    --sidebar-bg: #212121;
+    --header-bg: #212121;
     --main-bg: #2c2c2c;
     --border-color: #444;
     --text-color: #e0e0e0;
     --text-muted: #9e9e9e;
     --accent-color: #007bff;
     --accent-hover: #0056b3;
-    --active-item-bg: #3a3a3a;
+    --dropdown-bg: #3a3a3a;
 }
 
 body {
@@ -16,83 +16,148 @@ body {
     font-family: 'Inter', sans-serif;
     background-color: var(--bg-color);
     color: var(--text-color);
-    overflow: hidden; /* Prevents whole page from scrolling */
+    overflow: hidden;
 }
 
-/* --- Main Layout Container --- */
-.container {
-    display: flex;
-    height: 100vh; /* Full viewport height */
-}
-
-/* --- Sidebar Styles --- */
-.sidebar {
-    width: 320px;
-    background-color: var(--sidebar-bg);
-    border-right: 1px solid var(--border-color);
+.app-container {
     display: flex;
     flex-direction: column;
+    height: 100vh;
 }
 
-.sidebar-header {
-    padding: 20px;
+/* --- Header & Menu Styles --- */
+.app-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 24px;
+    height: 60px;
+    background-color: var(--header-bg);
     border-bottom: 1px solid var(--border-color);
+    flex-shrink: 0;
 }
 
-.sidebar-header h2 {
-    margin: 0;
+.app-header h1 {
     font-size: 1.25rem;
+    margin: 0;
+}
+
+.menu-container {
+    position: relative;
+}
+
+.menu-button {
+    padding: 8px 16px;
+    font-size: 0.9rem;
+    background-color: var(--main-bg);
+    border: 1px solid var(--border-color);
+    color: var(--text-color);
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+.dropdown-menu {
+    display: none;
+    position: absolute;
+    right: 0;
+    top: 120%;
+    background-color: var(--dropdown-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 6px;
+    width: 300px;
+    z-index: 1000;
+    box-shadow: 0 8px 16px rgba(0,0,0,0.3);
+    overflow: hidden;
+}
+
+.dropdown-menu.show {
+    display: block;
+}
+
+.dropdown-header {
+    padding: 12px 16px;
+    font-weight: 500;
+    border-bottom: 1px solid var(--border-color);
 }
 
 .ppt-list {
     list-style: none;
     padding: 0;
     margin: 0;
-    overflow-y: auto; /* Allows scrolling if list is long */
-    flex-grow: 1;
+    max-height: 250px;
+    overflow-y: auto;
 }
 
-.ppt-list-item {
-    padding: 15px 20px;
-    border-bottom: 1px solid var(--border-color);
+.ppt-list .ppt-info {
+    padding: 12px 16px;
     cursor: pointer;
-    transition: background-color 0.2s ease;
+}
+.ppt-list .ppt-info:hover {
+    background-color: var(--main-bg);
+}
+.ppt-list .ppt-name { font-weight: 500; margin-bottom: 4px; }
+.ppt-list .ppt-uploader { font-size: 0.8rem; color: var(--text-muted); }
+
+.dropdown-divider {
+    height: 1px;
+    background-color: var(--border-color);
+    margin: 8px 0;
 }
 
-.ppt-list-item:hover {
+.dropdown-item {
+    display: block;
+    padding: 12px 16px;
+    color: var(--text-color);
+    text-decoration: none;
+}
+.dropdown-item:hover {
     background-color: var(--main-bg);
 }
 
-.ppt-list-item.active {
-    background-color: var(--active-item-bg);
-}
-
-.ppt-info .ppt-name {
-    font-weight: 500;
-    margin-bottom: 5px;
-    word-break: break-all; /* Prevents long filenames from overflowing */
-}
-
-.ppt-info .ppt-uploader {
-    font-size: 0.85rem;
-    color: var(--text-muted);
-}
-
-/* --- Main Content Area Styles --- */
-.main-content {
-    flex-grow: 1; /* Takes up remaining space */
+/* --- Carousel & Viewer Styles --- */
+.carousel {
+    flex-grow: 1;
     display: flex;
-    flex-direction: column;
-    height: 100vh;
+    align-items: center;
+    justify-content: center;
+    gap: 16px;
+    padding: 24px;
+}
+
+.carousel-btn {
+    background-color: var(--main-bg);
+    border: 1px solid var(--border-color);
+    color: var(--text-color);
+    font-size: 2.5rem;
+    font-weight: bold;
+    cursor: pointer;
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    line-height: 1;
+    transition: background-color 0.2s;
+    flex-shrink: 0;
+}
+.carousel-btn:hover {
+    background-color: var(--dropdown-bg);
+}
+.carousel-btn:disabled {
+    opacity: 0.3;
+    cursor: not-allowed;
 }
 
 .viewer-container {
-    flex-grow: 1; /* This makes the viewer take up most of the vertical space */
-    position: relative;
-    background-color: var(--bg-color); /* Matches body background */
+    width: 100%;
+    height: 100%;
+    background-color: #000;
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    overflow: hidden;
 }
 
-/* --- Initial Welcome Message --- */
 .welcome-message {
     display: flex;
     flex-direction: column;
@@ -102,76 +167,80 @@ body {
     text-align: center;
     color: var(--text-muted);
 }
-
 .welcome-message h2 {
     color: var(--text-color);
-    margin-bottom: 10px;
 }
 
-/* This is where the Microsoft Viewer will live */
 #viewer-iframe {
     width: 100%;
     height: 100%;
     border: none;
 }
 
-/* --- Upload Section Styles --- */
-.upload-section {
-    background-color: var(--sidebar-bg);
-    border-top: 1px solid var(--border-color);
-    padding: 20px;
-    height: 250px; /* Fixed height for the upload area */
-    box-sizing: border-box; /* Ensures padding is included in the height */
-}
-
-.upload-header h3 {
-    margin: 0 0 15px 0;
-}
-
-.upload-form {
-    display: flex;
-    flex-direction: column;
-    gap: 15px; /* Space between form elements */
-}
-
-.form-group {
-    display: flex;
-    flex-direction: column;
-}
-
-.form-group label {
-    margin-bottom: 5px;
-    font-size: 0.9rem;
+.carousel-counter {
+    text-align: center;
+    padding: 8px;
+    height: 30px;
+    flex-shrink: 0;
     color: var(--text-muted);
 }
 
-.form-group input {
-    padding: 10px;
-    background-color: var(--main-bg);
-    border: 1px solid var(--border-color);
-    border-radius: 4px;
-    color: var(--text-color);
-    font-size: 1rem;
+/* --- Modal Styles --- */
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.7);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 2000;
 }
 
-.upload-button {
-    padding: 12px;
-    background-color: var(--accent-color);
-    color: white;
+.modal-overlay.hidden {
+    display: none;
+}
+
+.modal-content {
+    background-color: var(--header-bg);
+    padding: 24px;
+    border-radius: 8px;
+    width: 90%;
+    max-width: 500px;
+    position: relative;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+}
+
+.close-button {
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    font-size: 2rem;
+    color: var(--text-muted);
+    background: none;
     border: none;
-    border-radius: 4px;
-    font-size: 1rem;
-    font-weight: 500;
     cursor: pointer;
-    transition: background-color 0.2s ease;
+}
+.close-button:hover {
+    color: var(--text-color);
 }
 
-.upload-button:hover {
-    background-color: var(--accent-hover);
+.upload-form .form-group {
+    display: flex; flex-direction: column; margin-bottom: 16px;
 }
-
-.upload-status {
-    margin-top: 10px;
-    color: var(--text-muted);
-    min-height: 1em; /* Prevents layout shift when text appears */
+.upload-form label {
+    margin-bottom: 8px; font-size: 0.9rem;
 }
+.upload-form input {
+    padding: 10px; background-color: var(--main-bg); border: 1px solid var(--border-color);
+    border-radius: 4px; color: var(--text-color); font-size: 1rem;
+}
+.upload-button {
+    width: 100%; padding: 12px; background-color: var(--accent-color); color: white;
+    border: none; border-radius: 4px; font-size: 1rem; font-weight: 500; cursor: pointer;
+    margin-top: 8px;
+}
+.upload-button:hover { background-color: var(--accent-hover); }
+.upload-status { min-height: 1em; margin-top: 16px; text-align: center; }
