@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PPT Viewer</title>
+    <!-- Link to our stylesheet -->
+    <link rel="stylesheet" href="style.css">
+    <!-- Google Fonts for a nicer look -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <div class="container">
+
+        <!-- ===== SIDEBAR ===== -->
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <h2>Presentations</h2>
+            </div>
+            
+            <!-- This list will be populated by JavaScript later -->
+            <ul id="ppt-list" class="ppt-list">
+                <!-- --- Dummy Content Starts Here --- -->
+                <!-- This is placeholder content so we can see the design. -->
+                <!-- It will be removed when we add JavaScript. -->
+                <li class="ppt-list-item active">
+                    <div class="ppt-info">
+                        <div class="ppt-name">project-kickoff.pptx</div>
+                        <div class="ppt-uploader">by Alice</div>
+                    </div>
+                </li>
+                <li class="ppt-list-item">
+                    <div class="ppt-info">
+                        <div class="ppt-name">quarterly-review-deck.pptx</div>
+                        <div class="ppt-uploader">by Bob</div>
+                    </div>
+                </li>
+                <li class="ppt-list-item">
+                    <div class="ppt-info">
+                        <div class="ppt-name">final_presentation_v3.pptx</div>
+                        <div class="ppt-uploader">by Charlie</div>
+                    </div>
+                </li>
+                <!-- --- Dummy Content Ends Here --- -->
+            </ul>
+        </aside>
+
+        <!-- ===== MAIN CONTENT ===== -->
+        <main class="main-content">
+            
+            <!-- This is where the PPT viewer will be injected by JavaScript -->
+            <div id="viewer-container" class="viewer-container">
+                <!-- Initial message shown before a PPT is selected -->
+                <div id="welcome-message" class="welcome-message">
+                    <h2>Welcome to the PPT Viewer</h2>
+                    <p>Select a presentation from the list on the left to view it.</p>
+                    <p>Or, upload a new one below.</p>
+                </div>
+                <!-- The iframe for the viewer will go here -->
+            </div>
+
+            <!-- --- UPLOAD SECTION --- -->
+            <div class="upload-section">
+                <div class="upload-header">
+                    <h3>Upload a New Presentation</h3>
+                </div>
+                <form id="upload-form" class="upload-form">
+                    <div class="form-group">
+                        <label for="uploader-name">Your Name</label>
+                        <input type="text" id="uploader-name" placeholder="Enter your name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="ppt-file">PowerPoint File (.ppt, .pptx)</label>
+                        <input type="file" id="ppt-file" accept=".ppt,.pptx" required>
+                    </div>
+                    <button type="submit" class="upload-button">Upload</button>
+                    <!-- A message area for upload status (e.g., "Uploading..." or "Success!") -->
+                    <div id="upload-status" class="upload-status"></div>
+                </form>
+            </div>
+
+        </main>
+    </div>
+
+    <!-- We will link our JavaScript file at the end of the body -->
+    <!-- It's empty now, but it's good practice to have it here. -->
+
+    <!-- The official Supabase client library -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    
+    <!-- Our custom script file -->
+
+    <script src="script.js"></script>
+</body>
+</html>
