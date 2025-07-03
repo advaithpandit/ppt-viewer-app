@@ -86,8 +86,18 @@ body {
     flex-shrink: 0;
 }
 
-.ppt-info { flex-grow: 1; }
-.ppt-info .ppt-name { font-weight: 500; margin-bottom: 4px; }
+.ppt-info {
+    flex-grow: 1;
+    min-width: 0; /* <-- ADD THIS CRUCIAL LINE */
+}
+.ppt-info .ppt-name {
+    font-weight: 500;
+    margin-bottom: 4px;
+    /* --- NEW lines to add --- */
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
 .ppt-info .ppt-uploader { font-size: 0.8rem; color: var(--text-secondary); }
 
 .item-actions { display: flex; gap: 4px; opacity: 0; transition: opacity 0.2s ease; }
