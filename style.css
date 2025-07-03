@@ -7,8 +7,10 @@
     --border-color: #444;
     --text-primary: #f2f2f7;
     --text-secondary: #8e8e93;
-    --accent-blue: #0a84ff;
-    --accent-green: #30d158;
+    /* UPDATED: Green is primary, dark green is for active background */
+    --accent-primary: #30d158;
+    --accent-blue: #0a84ff; /* Blue for Upload */
+    --accent-dark-green: #2a683a; /* Darker green for active item BG */
     --accent-red: #ff453a;
 
     /* Sizing & Animation */
@@ -28,172 +30,98 @@ body {
 }
 
 /* --- Main Layout & Viewer --- */
-.viewer-host {
-    position: relative;
-    width: 100vw;
-    height: 100vh;
-}
-
-.viewer-container {
-    width: 100%;
-    height: 100%;
-    background-color: #000;
-}
-
-.welcome-message {
-    display: flex; flex-direction: column; justify-content: center; align-items: center;
-    height: 100%; text-align: center; color: var(--text-secondary);
-}
+.viewer-host { position: relative; width: 100vw; height: 100vh; }
+.viewer-container { width: 100%; height: 100%; background-color: #000; }
+.welcome-message { display: flex; flex-direction: column; justify-content: center; align-items: center; height: 100%; text-align: center; color: var(--text-secondary); }
 .welcome-message h2 { font-weight: 500; }
-
 #viewer-iframe { width: 100%; height: 100%; border: none; }
 
 /* --- Floating UI --- */
-.menu-container {
-    position: fixed;
-    top: 20px;
-    right: 20px;
-    z-index: 1000;
-}
+.menu-container { position: fixed; top: 20px; right: 20px; z-index: 1000; }
 
 .floating-btn {
-    width: 56px;
-    height: 56px;
-    border-radius: 50%;
+    width: 56px; height: 56px; border-radius: 50%;
     background-color: rgba(44, 44, 46, 0.8);
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px); /* For Safari */
+    backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
     border: 1px solid rgba(255, 255, 255, 0.1);
-    color: var(--text-primary);
-    font-size: 1.5rem;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    color: var(--text-primary); font-size: 1.5rem; cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
     transition: var(--transition-smooth);
     box-shadow: 0 4px 12px rgba(0,0,0,0.3);
 }
-.floating-btn:hover {
-    transform: scale(1.1);
-    box-shadow: 0 8px 16px rgba(0,0,0,0.3);
-}
+.floating-btn:hover { transform: scale(1.1); box-shadow: 0 8px 16px rgba(0,0,0,0.3); }
 
 .dropdown-menu {
-    display: block;
-    visibility: hidden;
-    opacity: 0;
-    position: absolute;
-    right: 0;
-    top: calc(100% + 12px);
+    display: block; visibility: hidden; opacity: 0;
+    position: absolute; right: 0; top: calc(100% + 12px);
     width: 340px;
-    /* CHANGED: Frosted glass effect */
-    background-color: rgba(44, 44, 46, 0.8);
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px); /* For Safari */
+    background-color: rgba(44, 44, 46, 0.85);
+    backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
     border: 1px solid rgba(255, 255, 255, 0.1);
-    border-radius: var(--radius-apple);
-    box-shadow: var(--shadow-medium);
+    border-radius: var(--radius-apple); box-shadow: var(--shadow-medium);
     transition: opacity 0.2s ease, transform 0.2s ease, visibility 0.2s ease;
     transform: translateY(10px);
 }
-.dropdown-menu.show {
-    visibility: visible;
-    opacity: 1;
-    transform: translateY(0);
-}
+.dropdown-menu.show { visibility: visible; opacity: 1; transform: translateY(0); }
 
-.dropdown-header {
-    padding: 12px 16px;
-    font-weight: 500;
-    border-bottom: 1px solid var(--border-color);
-}
-
+.dropdown-header { padding: 8px; border-bottom: 1px solid var(--border-color); }
 .ppt-list { list-style: none; padding: 8px; margin: 0; max-height: 45vh; overflow-y: auto; }
 
 .ppt-list-item {
-    display: flex; justify-content: space-between; align-items: center;
+    display: flex; align-items: center; /* Align filetype icon */
     padding: 8px; cursor: pointer; border-radius: 10px;
     transition: background-color 0.15s ease;
 }
 .ppt-list-item:hover { background-color: var(--surface-hover); }
 .ppt-list-item.active-item {
-    background-color: var(--accent-blue);
+    background-color: var(--accent-dark-green);
     color: white;
 }
-.ppt-list-item.active-item .ppt-uploader {
-    color: rgba(255, 255, 255, 0.8);
-}
-.ppt-list-item.active-item .action-btn svg {
-    stroke: rgba(255, 255, 255, 0.9);
+/* This makes the uploader name less prominent on active items */
+.ppt-list-item.active-item .ppt-uploader { color: rgba(255, 255, 255, 0.7); }
+
+/* NEW: Filetype icon styling */
+.filetype-icon {
+    width: 24px; height: 24px; margin-right: 12px;
+    flex-shrink: 0;
 }
 
-
-.ppt-info { flex-grow: 1; padding: 4px 8px; }
+.ppt-info { flex-grow: 1; }
 .ppt-info .ppt-name { font-weight: 500; margin-bottom: 4px; }
 .ppt-info .ppt-uploader { font-size: 0.8rem; color: var(--text-secondary); }
 
-.item-actions { display: flex; gap: 4px; }
+.item-actions { display: flex; gap: 4px; opacity: 0; transition: opacity 0.2s ease; }
+.ppt-list-item:hover .item-actions, .ppt-list-item.active-item .item-actions { opacity: 1; }
 
-/* CHANGED: Squircle button styling */
 .action-btn {
-    background: none;
-    border: none;
-    cursor: pointer;
-    padding: 0;
-    width: 36px;
-    height: 36px;
-    border-radius: 10px; /* Squircle shape */
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: background-color 0.15s ease, transform 0.1s ease; /* Added transform transition */
+    background: none; border: none; cursor: pointer; padding: 0;
+    width: 36px; height: 36px; border-radius: 10px;
+    display: flex; align-items: center; justify-content: center;
+    transition: background-color 0.15s ease, transform 0.1s ease;
 }
-.action-btn:hover {
-    background-color: var(--surface-hover);
-}
-.action-btn svg {
-    width: 20px;
-    height: 20px;
-    stroke-width: 1.8;
-}
-/* NEW: Popping animation on click */
-.action-btn.active-pop {
-    transform: scale(0.9);
-}
+.action-btn:hover { background-color: var(--surface-hover); }
+.action-btn.active-pop { transform: scale(0.9); }
+.action-btn svg { width: 20px; height: 20px; stroke-width: 1.8; }
 
-/* Specific icon colors */
-.download-btn svg { stroke: var(--accent-green); }
+/* FIXED: Icon colors are now specific and won't be overridden on active items */
+.download-btn svg { stroke: var(--accent-primary); }
 .edit-btn svg { stroke: var(--text-secondary); }
 .delete-btn svg { stroke: var(--accent-red); }
 
-/* --- Dropdown Actions --- */
-.dropdown-divider {
-    height: 1px;
-    background-color: var(--border-color);
-    margin: 0 8px;
-}
+.dropdown-divider { height: 1px; background-color: var(--border-color); }
 .dropdown-item {
-    display: flex; /* Changed to flex for icon */
-    align-items: center;
-    justify-content: center;
-    gap: 8px; /* Space between icon and text */
+    display: flex; align-items: center; justify-content: center; gap: 8px;
     padding: 12px;
-    margin: 8px;
-    color: var(--text-primary);
-    text-decoration: none;
-    border-radius: 10px;
-    transition: background-color 0.15s ease;
-    text-align: center;
-    font-weight: 500;
+    /* The margin line is now gone */
+    color: var(--text-primary); text-decoration: none;
+    border-radius: 10px; transition: background-color 0.15s ease;
+    text-align: center; font-weight: 500;
 }
-.dropdown-item:hover {
-    background-color: var(--surface-hover);
-}
-.dropdown-item svg {
-    width: 20px;
-    height: 20px;
-    stroke-width: 1.8;
-}
+.dropdown-item:hover { background-color: var(--surface-hover); }
+.dropdown-item svg { width: 20px; height: 20px; stroke-width: 1.8; }
+/* Specific colors for action buttons */
+#fullscreen-btn svg { stroke: var(--text-secondary); }
+#open-upload-modal svg { stroke: var(--accent-blue); }
 
 /* --- Modals --- */
 .modal-overlay {
@@ -204,7 +132,6 @@ body {
     transition: opacity 0.3s ease, visibility 0.3s ease;
 }
 .modal-overlay.visible { opacity: 1; visibility: visible; }
-
 .modal-content {
     background-color: var(--surface-color); padding: 32px;
     border-radius: var(--radius-apple); width: 90%; max-width: 480px;
@@ -214,14 +141,12 @@ body {
 .modal-overlay.visible .modal-content { transform: scale(1); }
 .modal-content h3 { margin-top: 0; font-weight: 500; }
 .modal-content p { color: var(--text-secondary); line-height: 1.5; margin: 16px 0; }
-
 .close-button {
     position: absolute; top: 16px; right: 16px; font-size: 1.2rem;
     color: var(--text-secondary); background-color: var(--surface-hover); border: none;
     cursor: pointer; width: 32px; height: 32px; border-radius: 50%;
     display: flex; align-items: center; justify-content: center;
 }
-
 .modal-form .form-group { display: flex; flex-direction: column; margin-bottom: 16px; }
 .modal-form label { margin-bottom: 8px; font-size: 0.9rem; }
 .modal-form input {
@@ -229,16 +154,12 @@ body {
     border-radius: 10px; color: var(--text-primary); font-size: 1rem;
 }
 .modal-form input:focus {
-    outline: none; border-color: var(--accent-blue); box-shadow: 0 0 0 3px rgba(10, 132, 255, 0.3);
+    outline: none; border-color: var(--accent-dark-green);
+    box-shadow: 0 0 0 3px rgba(42, 104, 58, 0.5);
 }
-
 .modal-actions { display: flex; justify-content: flex-end; gap: 12px; margin-top: 24px; }
-.modal-btn-primary, .modal-btn-secondary, .modal-btn-danger {
-    padding: 12px 24px; border: none; border-radius: 10px;
-    font-size: 1rem; font-weight: 500; cursor: pointer;
-}
-.modal-btn-primary { background-color: var(--accent-blue); color: white; }
+.modal-btn-primary, .modal-btn-secondary, .modal-btn-danger { padding: 12px 24px; border: none; border-radius: 10px; font-size: 1rem; font-weight: 500; cursor: pointer; }
+.modal-btn-primary { background-color: var(--accent-dark-green); color: white; } /* Dark Green */
 .modal-btn-secondary { background-color: var(--surface-hover); color: var(--text-primary); }
 .modal-btn-danger { background-color: var(--accent-red); color: white; }
-
 .modal-status { min-height: 1.2em; margin-top: 16px; text-align: center; }

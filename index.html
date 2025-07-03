@@ -7,37 +7,30 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-
-    <!-- This is the main host for the viewer and the floating UI -->
     <div class="viewer-host">
-        <!-- The document iframe will be injected here -->
         <div id="viewer-container" class="viewer-container">
             <div class="welcome-message">
                 <h2>Document Viewer</h2>
                 <p>Select a file from the menu to get started.</p>
             </div>
         </div>
-
-        <!-- Floating UI Elements -->
         <div class="menu-container">
             <button id="menu-button" class="floating-btn" title="Menu">
-                <span>⋮</span> <!-- Vertical ellipsis icon -->
+                <span>⋮</span>
             </button>
             <div id="dropdown-menu" class="dropdown-menu">
-                <div class="dropdown-header">Files</div>
+                <div class="dropdown-header">
+                    <a href="#" id="fullscreen-btn" class="dropdown-item"></a>
+                </div>
                 <ul id="ppt-list" class="ppt-list">
                     <!-- List will be populated by JS -->
                 </ul>
-                <!-- New section for actions -->
                 <div class="dropdown-divider"></div>
-                <a href="#" id="open-upload-modal" class="dropdown-item">Upload</a>
+                <a href="#" id="open-upload-modal" class="dropdown-item"></a>
             </div>
         </div>
     </div>
-
-    <!-- ===== MODALS (All hidden by default) ===== -->
-
-    <!-- UPLOAD MODAL -->
+    <!-- Modals -->
     <div id="upload-modal" class="modal-overlay">
         <div class="modal-content">
             <button class="close-button" data-close-modal>×</button>
@@ -56,8 +49,6 @@
             </form>
         </div>
     </div>
-
-    <!-- EDIT NAME MODAL -->
     <div id="edit-name-modal" class="modal-overlay">
         <div class="modal-content">
             <button class="close-button" data-close-modal>×</button>
@@ -74,8 +65,6 @@
             </form>
         </div>
     </div>
-
-    <!-- DELETE CONFIRMATION MODAL -->
     <div id="delete-confirm-modal" class="modal-overlay">
         <div class="modal-content">
             <button class="close-button" data-close-modal>×</button>
@@ -87,7 +76,6 @@
             </div>
         </div>
     </div>
-
     <!-- Scripts -->
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script src="script.js"></script>
