@@ -52,21 +52,34 @@ body {
 .floating-btn:hover { transform: scale(1.1); box-shadow: 0 8px 16px rgba(0,0,0,0.3); }
 
 .dropdown-menu {
-    display: block; visibility: hidden; opacity: 0;
-    position: absolute; right: 0; top: calc(100% + 12px);
+    display: flex; /* CHANGED */
+    flex-direction: column; /* NEW */
+    max-height: 80vh; /* NEW */
+    visibility: hidden;
+    opacity: 0;
+    position: absolute;
+    right: 0;
+    top: calc(100% + 12px);
     width: 340px;
     background-color: rgba(44, 44, 46, 0.85);
-    backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
     border: 1px solid rgba(255, 255, 255, 0.1);
-    border-radius: var(--radius-apple); box-shadow: var(--shadow-medium);
+    border-radius: var(--radius-apple);
+    box-shadow: var(--shadow-medium);
     transition: opacity 0.2s ease, transform 0.2s ease, visibility 0.2s ease;
     transform: translateY(10px);
 }
 .dropdown-menu.show { visibility: visible; opacity: 1; transform: translateY(0); }
 
 .dropdown-header { padding: 8px; border-bottom: 1px solid var(--border-color); }
-.ppt-list { list-style: none; padding: 8px; margin: 0; max-height: 45vh; overflow-y: auto; }
-
+.ppt-list {
+    list-style: none;
+    padding: 0 8px; /* CHANGED */
+    margin: 0;
+    overflow-y: auto;
+    flex-grow: 1; /* NEW */
+}
 .ppt-list-item {
     display: flex; align-items: center; /* Align filetype icon */
     padding: 8px; cursor: pointer; border-radius: 10px;
@@ -120,12 +133,18 @@ body {
 
 .dropdown-divider { height: 1px; background-color: var(--border-color); }
 .dropdown-item {
-    display: flex; align-items: center; justify-content: center; gap: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
     padding: 12px;
-    /* The margin line is now gone */
-    color: var(--text-primary); text-decoration: none;
-    border-radius: 10px; transition: background-color 0.15s ease;
-    text-align: center; font-weight: 500;
+    /* margin: 8px; REMOVED */
+    color: var(--text-primary);
+    text-decoration: none;
+    border-radius: 10px;
+    transition: background-color 0.15s ease;
+    text-align: center;
+    font-weight: 500;
 }
 .dropdown-item:hover { background-color: var(--surface-hover); }
 .dropdown-item svg { width: 20px; height: 20px; stroke-width: 1.8; }
@@ -173,3 +192,7 @@ body {
 .modal-btn-secondary { background-color: var(--surface-hover); color: var(--text-primary); }
 .modal-btn-danger { background-color: var(--accent-red); color: white; }
 .modal-status { min-height: 1.2em; margin-top: 16px; text-align: center; }
+
+.dropdown-actions {
+    padding: 8px;
+}
