@@ -91,7 +91,7 @@ function displayPresentationsInDropdown() {
             <span class="filetype-icon">${getFiletypeIcon(pres.file_name)}</span>
             <div class="ppt-info">
                 <div class="ppt-name">${pres.file_name}</div>
-                <div class="ppt-uploader">by ${pres.uploader_name}</div>
+                <div class="ppt-uploader">${pres.uploader_name}</div>
             </div>
             <div class="item-actions">
                 <button class="action-btn download-btn" title="Download">${ICONS.download}</button>
