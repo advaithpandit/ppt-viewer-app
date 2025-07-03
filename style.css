@@ -1,118 +1,103 @@
 /* --- Global Styles & Variables --- */
 :root {
-    /* Main Colors */
-    --bg-color: #1a1a1a;
-    --header-bg: #212121;
-    --main-bg: #2c2c2c;
+    /* Colors */
+    --bg-color: #1c1c1e;
+    --surface-color: #2c2c2e;
+    --surface-hover: #3a3a3c;
     --border-color: #444;
-    --text-color: #e0e0e0;
-    --text-muted: #9e9e9e;
-    --accent-color: #0d84ff; /* A slightly more vibrant blue */
-    --accent-hover: #0060c0;
-    --dropdown-bg: #3a3a3a;
-    --danger-color: #e53e3e;
-    --danger-hover: #c53030;
+    --text-primary: #f2f2f7;
+    --text-secondary: #8e8e93;
+    --accent-blue: #0a84ff;
+    --accent-green: #30d158;
+    --accent-red: #ff453a;
 
-    /* Squircle & Animation Variables */
-    --radius-squircle: 12px; /* Key variable for the squircle look */
-    --shadow-soft: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
-    --shadow-medium: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
-    --transition-fast: all 0.2s cubic-bezier(0.4, 0, 0.2, 1); /* Smooth transition */
+    /* Sizing & Animation */
+    --radius-apple: 16px;
+    --transition-smooth: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+    --shadow-medium: 0 10px 30px -10px rgba(0, 0, 0, 0.4);
 }
 
 body {
     margin: 0;
-    font-family: 'Inter', sans-serif;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
     background-color: var(--bg-color);
-    color: var(--text-color);
+    color: var(--text-primary);
     overflow: hidden;
-    -webkit-font-smoothing: antialiased; /* Smoother fonts */
+    -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
 }
 
-.app-container {
-    display: flex;
-    flex-direction: column;
+/* --- Main Layout & Viewer --- */
+.viewer-host {
+    position: relative;
+    width: 100vw;
     height: 100vh;
 }
 
-/* --- Header & Menu Styles --- */
-.app-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 0 24px;
-    height: 64px; /* Slightly taller */
-    background-color: var(--header-bg);
-    border-bottom: 1px solid var(--border-color);
-    flex-shrink: 0;
+.viewer-container {
+    width: 100%;
+    height: 100%;
+    background-color: #000;
 }
 
-#presentation-title {
-    font-size: 1.25rem;
-    font-weight: 500;
-    margin: 0;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
+.welcome-message {
+    display: flex; flex-direction: column; justify-content: center; align-items: center;
+    height: 100%; text-align: center; color: var(--text-secondary);
 }
+.welcome-message h2 { font-weight: 500; }
 
-.header-actions {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-}
+#viewer-iframe { width: 100%; height: 100%; border: none; }
 
-.header-btn {
-    padding: 10px 16px;
-    font-size: 0.9rem;
-    font-weight: 500;
-    background-color: var(--main-bg);
-    border: 1px solid var(--border-color);
-    color: var(--text-color);
-    border-radius: var(--radius-squircle);
-    cursor: pointer;
-    white-space: nowrap;
-    transition: var(--transition-fast);
-}
-.header-btn:hover {
-    border-color: #777;
-    transform: translateY(-2px); /* Subtle lift on hover */
-    box-shadow: var(--shadow-soft);
-}
-/* POP anination on click */
-.header-btn:active {
-    transform: translateY(-1px) scale(0.98);
-}
-.header-btn:disabled {
-    opacity: 0.4;
-    cursor: not-allowed;
-    transform: none;
-    box-shadow: none;
-}
-
+/* --- Floating UI --- */
 .menu-container {
-    position: relative;
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 1000;
+}
+
+.floating-btn {
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    background-color: rgba(44, 44, 46, 0.8);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px); /* For Safari */
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    color: var(--text-primary);
+    font-size: 1.5rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: var(--transition-smooth);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+}
+.floating-btn:hover {
+    transform: scale(1.1);
+    box-shadow: 0 8px 16px rgba(0,0,0,0.3);
 }
 
 .dropdown-menu {
-    display: none;
+    display: block;
+    visibility: hidden;
+    opacity: 0;
     position: absolute;
     right: 0;
-    top: calc(100% + 8px); /* Add a gap */
-    background-color: var(--dropdown-bg);
-    border: 1px solid var(--border-color);
-    border-radius: var(--radius-squircle);
-    width: 320px;
-    z-index: 1000;
+    top: calc(100% + 12px);
+    width: 340px;
+    /* CHANGED: Frosted glass effect */
+    background-color: rgba(44, 44, 46, 0.8);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px); /* For Safari */
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: var(--radius-apple);
     box-shadow: var(--shadow-medium);
-    overflow: hidden;
-    opacity: 0;
+    transition: opacity 0.2s ease, transform 0.2s ease, visibility 0.2s ease;
     transform: translateY(10px);
-    transition: opacity 0.2s ease, transform 0.2s ease;
 }
 .dropdown-menu.show {
-    display: block;
+    visibility: visible;
     opacity: 1;
     transform: translateY(0);
 }
@@ -123,145 +108,137 @@ body {
     border-bottom: 1px solid var(--border-color);
 }
 
-.ppt-list { list-style: none; padding: 4px; margin: 0; max-height: 400px; overflow-y: auto; }
+.ppt-list { list-style: none; padding: 8px; margin: 0; max-height: 45vh; overflow-y: auto; }
 
 .ppt-list-item {
     display: flex; justify-content: space-between; align-items: center;
-    padding: 12px; cursor: pointer; border-radius: 8px; /* Inner radius */
+    padding: 8px; cursor: pointer; border-radius: 10px;
     transition: background-color 0.15s ease;
 }
-.ppt-list-item:hover { background-color: var(--main-bg); }
+.ppt-list-item:hover { background-color: var(--surface-hover); }
+.ppt-list-item.active-item {
+    background-color: var(--accent-blue);
+    color: white;
+}
+.ppt-list-item.active-item .ppt-uploader {
+    color: rgba(255, 255, 255, 0.8);
+}
+.ppt-list-item.active-item .action-btn svg {
+    stroke: rgba(255, 255, 255, 0.9);
+}
+
+
+.ppt-info { flex-grow: 1; padding: 4px 8px; }
 .ppt-info .ppt-name { font-weight: 500; margin-bottom: 4px; }
-.ppt-info .ppt-uploader { font-size: 0.8rem; color: var(--text-muted); }
+.ppt-info .ppt-uploader { font-size: 0.8rem; color: var(--text-secondary); }
 
-.item-actions { display: flex; gap: 8px; font-size: 1.1rem; }
+.item-actions { display: flex; gap: 4px; }
+
+/* CHANGED: Squircle button styling */
 .action-btn {
-    background: none; border: none; color: var(--text-muted); cursor: pointer;
-    padding: 6px; border-radius: 50%;
-    transition: var(--transition-fast);
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    width: 36px;
+    height: 36px;
+    border-radius: 10px; /* Squircle shape */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background-color 0.15s ease, transform 0.1s ease; /* Added transform transition */
 }
-.action-btn:hover { color: var(--text-color); background-color: rgba(255, 255, 255, 0.1); }
-.delete-btn:hover { color: var(--danger-color); }
-
-
-/* --- Carousel & Viewer Styles --- */
-.carousel {
-    flex-grow: 1; display: flex; align-items: center;
-    justify-content: center; gap: 16px; padding: 24px;
+.action-btn:hover {
+    background-color: var(--surface-hover);
+}
+.action-btn svg {
+    width: 20px;
+    height: 20px;
+    stroke-width: 1.8;
+}
+/* NEW: Popping animation on click */
+.action-btn.active-pop {
+    transform: scale(0.9);
 }
 
-.carousel-btn {
-    background-color: transparent; border: 1px solid var(--border-color); color: var(--text-color);
-    font-size: 2rem; font-weight: 500; cursor: pointer; border-radius: 50%;
-    width: 50px; height: 50px; display: flex; align-items: center; justify-content: center;
-    line-height: 1; flex-shrink: 0;
-    transition: var(--transition-fast);
-}
-.carousel-btn:hover { background-color: var(--main-bg); transform: scale(1.1); }
-.carousel-btn:active { transform: scale(1.05); }
-.carousel-btn:disabled { opacity: 0.3; cursor: not-allowed; transform: none; background-color: transparent;}
+/* Specific icon colors */
+.download-btn svg { stroke: var(--accent-green); }
+.edit-btn svg { stroke: var(--text-secondary); }
+.delete-btn svg { stroke: var(--accent-red); }
 
-.viewer-container {
-    width: 100%; height: 100%; background-color: #000;
-    border: 1px solid var(--border-color);
-    border-radius: 16px; /* Larger radius for main container */
-    overflow: hidden;
-    box-shadow: var(--shadow-medium);
+/* --- Dropdown Actions --- */
+.dropdown-divider {
+    height: 1px;
+    background-color: var(--border-color);
+    margin: 0 8px;
 }
-.welcome-message {
-    display: flex; flex-direction: column; justify-content: center; align-items: center;
-    height: 100%; text-align: center; color: var(--text-muted);
+.dropdown-item {
+    display: flex; /* Changed to flex for icon */
+    align-items: center;
+    justify-content: center;
+    gap: 8px; /* Space between icon and text */
+    padding: 12px;
+    margin: 8px;
+    color: var(--text-primary);
+    text-decoration: none;
+    border-radius: 10px;
+    transition: background-color 0.15s ease;
+    text-align: center;
+    font-weight: 500;
 }
-.welcome-message h2 { color: var(--text-color); font-weight: 500; }
-#viewer-iframe { width: 100%; height: 100%; border: none; }
-.carousel-counter { text-align: center; padding: 12px; height: 30px; flex-shrink: 0; color: var(--text-muted); }
+.dropdown-item:hover {
+    background-color: var(--surface-hover);
+}
+.dropdown-item svg {
+    width: 20px;
+    height: 20px;
+    stroke-width: 1.8;
+}
 
-/* --- Modal Styles (Overhauled for fade-in) --- */
+/* --- Modals --- */
 .modal-overlay {
     position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-    background-color: rgba(0, 0, 0, 0.7); display: flex; justify-content: center;
-    align-items: center; z-index: 2000;
-    opacity: 0;
-    visibility: hidden;
+    background-color: rgba(0, 0, 0, 0.5); backdrop-filter: blur(8px);
+    display: flex; justify-content: center; align-items: center;
+    z-index: 2000; opacity: 0; visibility: hidden;
     transition: opacity 0.3s ease, visibility 0.3s ease;
 }
-/* This class will now be added/removed by JS to trigger animation */
-.modal-overlay.visible {
-    opacity: 1;
-    visibility: visible;
-}
-.modal-content {
-    background-color: var(--header-bg); padding: 32px;
-    border-radius: 16px; /* Squircle */
-    width: 90%; max-width: 500px; position: relative;
-    box-shadow: var(--shadow-medium);
-    transform: scale(0.95);
-    transition: transform 0.3s ease;
-}
-.modal-overlay.visible .modal-content {
-    transform: scale(1);
-}
+.modal-overlay.visible { opacity: 1; visibility: visible; }
 
-.modal-content h3 { margin-top: 0; }
-.modal-content p { color: var(--text-muted); line-height: 1.5; }
+.modal-content {
+    background-color: var(--surface-color); padding: 32px;
+    border-radius: var(--radius-apple); width: 90%; max-width: 480px;
+    position: relative; box-shadow: var(--shadow-medium);
+    transform: scale(0.95); transition: transform 0.3s ease;
+}
+.modal-overlay.visible .modal-content { transform: scale(1); }
+.modal-content h3 { margin-top: 0; font-weight: 500; }
+.modal-content p { color: var(--text-secondary); line-height: 1.5; margin: 16px 0; }
 
 .close-button {
-    position: absolute; top: 16px; right: 16px; font-size: 1.5rem;
-    color: var(--text-muted); background: none; border: none; cursor: pointer;
-    width: 32px; height: 32px; border-radius: 50%; display: flex;
-    align-items: center; justify-content: center;
-    transition: var(--transition-fast);
-}
-.close-button:hover { color: var(--text-color); background-color: var(--main-bg); }
-
-.upload-form .form-group { display: flex; flex-direction: column; margin-bottom: 16px; }
-.upload-form label { margin-bottom: 8px; font-size: 0.9rem; }
-.upload-form input {
-    padding: 12px; background-color: var(--main-bg); border: 1px solid var(--border-color);
-    border-radius: var(--radius-squircle); color: var(--text-color); font-size: 1rem;
-    transition: var(--transition-fast);
-}
-.upload-form input:focus {
-    outline: none;
-    border-color: var(--accent-color);
-    box-shadow: 0 0 0 3px rgba(13, 132, 255, 0.3);
+    position: absolute; top: 16px; right: 16px; font-size: 1.2rem;
+    color: var(--text-secondary); background-color: var(--surface-hover); border: none;
+    cursor: pointer; width: 32px; height: 32px; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
 }
 
-/* Base button styles for modals */
-.modal-btn {
-    padding: 12px 24px; border: none; border-radius: var(--radius-squircle);
-    font-size: 1rem; font-weight: 500; cursor: pointer;
-    transition: var(--transition-fast);
+.modal-form .form-group { display: flex; flex-direction: column; margin-bottom: 16px; }
+.modal-form label { margin-bottom: 8px; font-size: 0.9rem; }
+.modal-form input {
+    padding: 12px; background-color: var(--bg-color); border: 1px solid var(--border-color);
+    border-radius: 10px; color: var(--text-primary); font-size: 1rem;
 }
-.modal-btn:active { transform: scale(0.98); }
-
-/* Applying base style to existing buttons */
-.upload-button {
-    composes: modal-btn; /* Fictional, but illustrates concept. We'll copy styles */
-    width: 100%; padding: 12px; background-color: var(--accent-color); color: white;
-    border: none; border-radius: var(--radius-squircle); font-size: 1rem; font-weight: 500;
-    cursor: pointer; margin-top: 8px; transition: var(--transition-fast);
+.modal-form input:focus {
+    outline: none; border-color: var(--accent-blue); box-shadow: 0 0 0 3px rgba(10, 132, 255, 0.3);
 }
-.upload-button:hover { background-color: var(--accent-hover); }
-.upload-button:active { transform: scale(0.99); } /* Subtle scale for full-width button */
 
 .modal-actions { display: flex; justify-content: flex-end; gap: 12px; margin-top: 24px; }
-
-.modal-btn-secondary {
-    composes: modal-btn;
-    padding: 12px 24px; background-color: var(--main-bg); color: var(--text-color);
-    border: 1px solid var(--border-color); border-radius: var(--radius-squircle);
-    font-size: 1rem; font-weight: 500; cursor: pointer; transition: var(--transition-fast);
+.modal-btn-primary, .modal-btn-secondary, .modal-btn-danger {
+    padding: 12px 24px; border: none; border-radius: 10px;
+    font-size: 1rem; font-weight: 500; cursor: pointer;
 }
-.modal-btn-secondary:hover { border-color: #777; }
+.modal-btn-primary { background-color: var(--accent-blue); color: white; }
+.modal-btn-secondary { background-color: var(--surface-hover); color: var(--text-primary); }
+.modal-btn-danger { background-color: var(--accent-red); color: white; }
 
-.modal-btn-danger {
-    composes: modal-btn;
-    padding: 12px 24px; background-color: var(--danger-color); color: white;
-    border: none; border-radius: var(--radius-squircle); font-size: 1rem; font-weight: 500;
-    cursor: pointer; transition: var(--transition-fast);
-}
-.modal-btn-danger:hover { background-color: var(--danger-hover); }
-
-#edit-form .upload-button { width: auto; margin-top: 0; }
-.upload-status { min-height: 1.2em; margin-top: 16px; text-align: center; }
+.modal-status { min-height: 1.2em; margin-top: 16px; text-align: center; }
