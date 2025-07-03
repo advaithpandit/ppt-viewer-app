@@ -1,9 +1,10 @@
 // ===================================================================================
 // === 1. CONFIGURATION
 // ===================================================================================
-const SUPABASE_URL = 'https://twgslkjjhsjmagvprcip.supabase.co';
-const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InR3Z3Nsa2pqaHNqbWFndnByY2lwIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTE0ODIwNjQsImV4cCI6MjA2NzA1ODA2NH0.l0ylH1mQrpTSqCRNcYUvOsqRtwPnLkS6XHOLen__e1Y';
+const SUPABASE_URL = 'https://ranvcpqfcynzblfhnaer.supabase.co'; // Your Supabase URL
+const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InJhbnZjcHFmY3luemJsZmhuYWVyIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTE0NTc4OTQsImV4cCI6MjA2NzAzMzg5NH0.j2Cxny4EYW4_NzE4AYyi597CwCgZAF5VTqyslJNU5UI'; // Your Supabase Anon Key
 const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
 
 // ===================================================================================
 // === 2. ELEMENT SELECTORS
